@@ -1,11 +1,16 @@
 class Track:
-
     def __init__(self, track_name, track_duration):
         self.track_name = track_name
         self.track_duration = track_duration
 
-    def show(self, ):
-        return f"-='{self.track_name}' - {self.track_duration} мин.=-"
+    def __gt__(self, other):
+        return self.track_duration > other.track_duration
+
+    def __lt__(self, other):
+        return self.track_duration < other.track_duration
+
+    def __str__(self):
+        return f"{self.track_name} - {self.track_duration} min."
 
 
 class Album(Track):
@@ -14,11 +19,12 @@ class Album(Track):
         self.band_name = band_name
         self.track_list = []
 
-    def get_tracks(self):
-        print(f"_____{self.album_name}______")
+    def __str__(self):
+        print(f" Name group: {self.band_name}\n Name album: {self.album_name} \n Tracks:")
+        album = ''
         for track in self.track_list:
-            print(track.show())
-        print()
+            album += f"\t{track.track_name} - {track.track_duration} min.\n"
+        return album
 
     def add_track(self, track):
         self.track_list.append(track)
@@ -27,4 +33,4 @@ class Album(Track):
         time = 0
         for duration in self.track_list:
             time += duration.track_duration
-        return f"Длительность песен альбома '{self.album_name}' составляет: {time} мин.\n"
+        return f"{self.album_name}'s duration is: {time} min.\n"
